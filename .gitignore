@@ -1,6 +1,7 @@
 out/
 bin/
 .idea/
+*.iml
 *.txt
 *.exe
 .vscode/
