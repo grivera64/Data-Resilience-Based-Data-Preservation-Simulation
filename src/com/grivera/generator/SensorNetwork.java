@@ -6,7 +6,6 @@ import com.grivera.generator.sensors.StorageNode;
 import com.grivera.generator.sensors.TransitionNode;
 import com.grivera.solver.ILPModel;
 import com.grivera.solver.Model;
-import com.grivera.util.Pair;
 import com.grivera.util.Tuple;
 
 import java.io.File;
@@ -27,8 +26,6 @@ public class SensorNetwork implements Network {
     private List<StorageNode> sNodes;
     private List<TransitionNode> tNodes;
     private Map<SensorNode, Set<SensorNode>> graph;
-
-    private final Map<Pair<Pair<SensorNode, Integer>, Pair<SensorNode, Integer>>, Integer> costMap = new HashMap<>();
 
     private final double width, length;
     private int dataPacketCount;
