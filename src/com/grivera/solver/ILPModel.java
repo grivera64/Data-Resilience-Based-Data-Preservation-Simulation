@@ -496,6 +496,12 @@ public class ILPModel extends AbstractModel {
     }
 
     @Override
+    public int getDataResilienceLevel() {
+        super.getDataResilienceLevel();
+        return this.getNetwork().calculateDataResilienceLevel();
+    }
+
+    @Override
     public void printRoute() {
         super.printRoute();
         

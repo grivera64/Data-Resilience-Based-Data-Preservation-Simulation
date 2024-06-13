@@ -84,4 +84,8 @@ public class StorageNode extends SensorNode {
     public void offloadTo(SensorNode receiverNode, int packets) {
         throw new UnsupportedOperationException("Storage Nodes cannot offload packets");
     }
+
+    public int calculateDataResilienceLevel() {
+        return usedSpace * this.getEnergy();
+    }
 }

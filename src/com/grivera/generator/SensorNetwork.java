@@ -766,4 +766,9 @@ public class SensorNetwork implements Network {
         }
         return this.tNodes.get(id - 1);
     }
+
+    public int calculateDataResilienceLevel() {
+        return this.getStorageNodes().stream()
+                .reduce(0, (result, sn) -> result + sn.calculateDataResilienceLevel(), Integer::sum);
+    }
 }

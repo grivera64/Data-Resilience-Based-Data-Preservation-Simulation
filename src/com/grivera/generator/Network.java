@@ -97,4 +97,6 @@ public interface Network {
     DataNode getDataNodeById(int id);
     StorageNode getStorageNodeById(int id);
     TransitionNode getTransitionNodeById(int id);
+
+    int calculateDataResilienceLevel();
 }

@@ -164,6 +164,12 @@ public class PMPCs2Model extends AbstractModel {
     }
 
     @Override
+    public int getDataResilienceLevel() {
+        super.getDataResilienceLevel();
+        return this.getNetwork().calculateDataResilienceLevel();
+    }
+
+    @Override
     public void printRoute() {
         super.printRoute();
 

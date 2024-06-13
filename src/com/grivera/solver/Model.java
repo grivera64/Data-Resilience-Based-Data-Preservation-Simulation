@@ -7,5 +7,6 @@ public interface Model {
     int getTotalCost();
     int getTotalProfit();
     int getTotalPackets();
+    int getDataResilienceLevel();
     void printRoute();
 }

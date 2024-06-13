@@ -171,6 +171,7 @@ public class RunModelTests {
         System.out.printf("Cost: %d \u00b5J\n", model.getTotalCost());
         System.out.printf("Profit: %d \u00b5J\n", model.getTotalProfit());
         System.out.printf("Packets preserved: %d\n", model.getTotalPackets());
+        System.out.printf("Data Resilience: %d\n", model.getDataResilienceLevel());
         if (showRoute) {
             System.out.println("Route:");
             model.printRoute();
