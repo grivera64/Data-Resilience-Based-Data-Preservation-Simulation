@@ -39,12 +39,14 @@ public class RunModelTests {
 
         System.out.print("Where is your installation of cs2.exe located?\n(\".\") > ");
         String cs2Location = keyboard.nextLine();
-        if (cs2Location.isEmpty()) {
-            cs2Location = ".";
-        } else if (cs2Location.matches("\\$[A-Za-z_][A-Za-z0-9_]*")) {
+        if (cs2Location.matches("\\$[A-Za-z_][A-Za-z0-9_]*")) {
             cs2Location = System.getenv(cs2Location.substring(1));
         } else if (cs2Location.matches("%[A-Za-z_][A-Za-z0-9_]*%")) {
             cs2Location = System.getenv(cs2Location.substring(1, cs2Location.length() - 1));
+        }
+
+        if (cs2Location == null || cs2Location.isEmpty()) {
+            cs2Location = ".";
         }
         System.out.println();
 
@@ -70,29 +72,13 @@ public class RunModelTests {
 
         Model model = new PriorityGreedyModel(network);
         model.run();
-        System.out.println("Priority Greedy:");
-        System.out.printf("Value: %d \u00b5J\n", model.getTotalValue());
-        System.out.printf("Cost: %d \u00b5J\n", model.getTotalCost());
-        System.out.printf("Profit: %d \u00b5J\n", model.getTotalProfit());
-        System.out.printf("Packets preserved: %d\n", model.getTotalPackets());
-        if (showRoute) {
-            System.out.println("Route:");
-            model.printRoute();
-        }
+        printModelResults("Priority Greedy", model, showRoute);
         System.out.println();
 
         try {
-            System.out.println("CS2 (Optimal):");
             model = new PMPCs2Model(network, cs2Location);
             model.run();
-            System.out.printf("Value: %d \u00b5J\n", model.getTotalValue());
-            System.out.printf("Cost: %d \u00b5J\n", model.getTotalCost());
-            System.out.printf("Profit: %d \u00b5J\n", model.getTotalProfit());
-            System.out.printf("Packets preserved: %d\n", model.getTotalPackets());
-            if (showRoute) {
-                System.out.println("Route:");
-                model.printRoute();
-            }
+            printModelResults("CS2 (Optimal)", model, showRoute);
         } catch (IllegalArgumentException e) {
             System.out.printf("WARNING: %s\n", e.getMessage());
             System.out.println("Skipping Cs2Model...");
@@ -102,28 +88,12 @@ public class RunModelTests {
 
         model = new ILPModel(network);
         model.run();
-        System.out.println("ILP:");
-        System.out.printf("Value: %d \u00b5J\n", model.getTotalValue());
-        System.out.printf("Cost: %d \u00b5J\n", model.getTotalCost());
-        System.out.printf("Profit: %d \u00b5J\n", model.getTotalProfit());
-        System.out.printf("Packets preserved: %d\n", model.getTotalPackets());
-        if (showRoute) {
-            System.out.println("Route:");
-            model.printRoute();
-        }
+        printModelResults("ILP", model, showRoute);
         System.out.println();
 
         model = new ILPWeightedModel(network);
         model.run();
-        System.out.println("ILP (Weighted):");
-        System.out.printf("Value: %d \u00b5J\n", model.getTotalValue());
-        System.out.printf("Cost: %d \u00b5J\n", model.getTotalCost());
-        System.out.printf("Profit: %d \u00b5J\n", model.getTotalProfit());
-        System.out.printf("Packets preserved: %d\n", model.getTotalPackets());
-        if (showRoute) {
-            System.out.println("Route:");
-            model.printRoute();
-        }
+        printModelResults("ILP (Weighted)", model, showRoute);
         System.out.println();
     }
 
@@ -193,5 +163,17 @@ public class RunModelTests {
                 width, height, nodeCount, transmissionRange, gNodeCount, packetsCount, sNodeCount, storageCount,
                 batteryCapacity, lowestValue, highestValue
         );
+    }
+
+    public static void printModelResults(String title, Model model, boolean showRoute) {
+        System.out.printf("%s:\n", title);
+        System.out.printf("Value: %d \u00b5J\n", model.getTotalValue());
+        System.out.printf("Cost: %d \u00b5J\n", model.getTotalCost());
+        System.out.printf("Profit: %d \u00b5J\n", model.getTotalProfit());
+        System.out.printf("Packets preserved: %d\n", model.getTotalPackets());
+        if (showRoute) {
+            System.out.println("Route:");
+            model.printRoute();
+        }
     }
 }
